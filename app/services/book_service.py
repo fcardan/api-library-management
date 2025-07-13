@@ -4,6 +4,7 @@ busca, listagem, atualização (completa e parcial) e remoção de livros.
 """
 
 from sqlalchemy.orm import Session
+from sqlalchemy import desc
 from uuid import uuid4
 from fastapi import HTTPException, status
 from typing import Optional, List
@@ -94,6 +95,51 @@ def list_books_service(
     return query.offset(skip).limit(limit).all()
 
 
+def list_books_by_availability_service(
+    db: Session,
+    status: bool,
+    skip: int = 0,
+    limit: int = 10,
+    order_by: Optional[str] = "title"
+) -> List[Book]:
+    
+    """
+    Lista livros disponíveis ou indisponíveis conforme parâmetro,
+    com paginação e ordenação.
+    """
+
+    try:
+        query = db.query(Book)
+
+        # Filtra pela disponibilidade
+        if status:
+            query = query.filter(Book.available_copies > 0)
+        else:
+            query = query.filter(Book.available_copies == 0)
+
+        # Ordenação segura
+        allowed_fields = ["title", "published_date", "total_copies"]
+        direction = "asc"
+        field = order_by
+
+        if order_by.startswith("-"):
+            direction = "desc"
+            field = order_by[1:]
+
+        if field not in allowed_fields:
+            raise HTTPException(status_code=422, detail=f"Campo inválido para ordenação: {order_by}")
+
+        sort_column = getattr(Book, field)
+        query = query.order_by(desc(sort_column) if direction == "desc" else sort_column)
+
+        return query.offset(skip).limit(limit).all()
+
+    except Exception as e:
+        # Log opcional
+        print(f"Erro interno: {str(e)}")
+        raise HTTPException(status_code=500, detail="Erro ao recuperar livros")
+
+
 def update_book_service(
     db: Session,
     book_id: str,
@@ -164,12 +210,3 @@ def delete_book_service(db: Session, book_id: str) -> None:
     db.commit()
     logger.info(f"Livro {book.title} removido com sucesso")
 
-
-def list_books_by_availability_service(db: Session, status: bool) -> List[Book]:
-    """
-    Lista livros disponíveis ou indisponíveis conforme parâmetro.
-    """
-    if status:
-        return db.query(Book).filter(Book.available_copies > 0).all()
-    else:
-        return db.query(Book).filter(Book.available_copies == 0).all()

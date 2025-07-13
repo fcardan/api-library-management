@@ -6,6 +6,8 @@ Inclui criação, listagem, busca por ID, atualização completa/parcial e exclu
 
 from fastapi import APIRouter, Depends, Request, HTTPException, Query, status
 from sqlalchemy.orm import Session
+from slowapi import Limiter
+from slowapi.util import get_remote_address
 from uuid import UUID
 from app.db.session import get_db
 from app.schemas.author_schema import AuthorCreate, AuthorOut
@@ -25,9 +27,14 @@ from app.core.logging import logger
 
 router = APIRouter()
 
+# Limite de requisições por minuto por IP
+limiter = Limiter(key_func=get_remote_address)  # por IP
+
 
 @router.post("/", response_model=AuthorOut, status_code=status.HTTP_201_CREATED, tags=["Autores"])
+@limiter.limit("20/minute")
 def create_author(
+    request: Request,
     author: AuthorCreate,
     db: Session = Depends(get_db),
     current_user=Depends(get_current_user)
@@ -39,19 +46,8 @@ def create_author(
     return create_author_service(db, author)
 
 
-@router.get("/", response_model=list[AuthorOut], tags=["Autores"])
-def list_authors(
-    db: Session = Depends(get_db),
-    current_user=Depends(get_current_user)
-):
-    """
-    Retorna a lista completa de autores cadastrados.
-    """
-    logger.debug("Solicitada listagem de autores")
-    return list_authors_service(db)
-
-
 @router.get("/{author_id}", response_model=AuthorOut, tags=["Autores"])
+@limiter.limit("50/minute")
 def get_author(
     request: Request,
     author_id: str,
@@ -65,50 +61,24 @@ def get_author(
     return get_author_service(db, author_id)
 
 
-@router.put("/{author_id}", response_model=AuthorOut, tags=["Autores"])
-def update_author(
-    author_id: UUID,
-    author_update: AuthorCreate,
+@router.get("/", response_model=list[AuthorOut], tags=["Autores"])
+@limiter.limit("50/minute")
+def list_authors(
+    request: Request,
     db: Session = Depends(get_db),
     current_user=Depends(get_current_user)
 ):
     """
-    Atualiza completamente os dados de um autor.
+    Retorna a lista completa de autores cadastrados.
     """
-    logger.info(f"Solicitada atualização total do autor ID: {author_id}")
-    return update_author_service(db, str(author_id), author_update)
-
-
-@router.patch("/{author_id}", response_model=AuthorOut, tags=["Autores"])
-def patch_author(
-    author_id: UUID,
-    author_update: AuthorCreate,
-    db: Session = Depends(get_db),
-    current_user=Depends(get_current_user)
-):
-    """
-    Atualiza parcialmente os dados de um autor.
-    """
-    logger.info(f"Solicitada atualização parcial do autor ID: {author_id}")
-    return patch_author_service(db, str(author_id), author_update)
-
-
-@router.delete("/{author_id}", status_code=status.HTTP_204_NO_CONTENT, tags=["Autores"])
-def delete_author(
-    author_id: UUID,
-    db: Session = Depends(get_db),
-    current_user=Depends(get_current_user)
-):
-    """
-    Remove um autor do sistema pelo seu ID.
-    """
-    logger.info(f"Solicitada exclusão do autor ID: {author_id}")
-    delete_author_service(db, str(author_id))
-    return None
+    logger.debug("Solicitada listagem de autores")
+    return list_authors_service(db)
 
 
 @router.get("/{author_id}/books", response_model=list[BookOut], tags=["Autores"])
+@limiter.limit("50/minute")
 def list_books_by_author(
+    request: Request,
     author_id: UUID,
     db: Session = Depends(get_db),
     current_user=Depends(get_current_user)
@@ -128,3 +98,52 @@ def list_books_by_author(
     books = db.query(Book).filter(Book.author_id == str(author_id)).all()
     logger.info(f"{len(books)} livros encontrados para o autor {author.name}")
     return books
+
+
+@router.put("/{author_id}", response_model=AuthorOut, tags=["Autores"])
+@limiter.limit("20/minute")
+def update_author(
+    request: Request,
+    author_id: UUID,
+    author_update: AuthorCreate,
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user)
+):
+    """
+    Atualiza completamente os dados de um autor.
+    """
+    logger.info(f"Solicitada atualização total do autor ID: {author_id}")
+    return update_author_service(db, str(author_id), author_update)
+
+
+@router.patch("/{author_id}", response_model=AuthorOut, tags=["Autores"])
+@limiter.limit("20/minute")
+def patch_author(
+    request: Request,
+    author_id: UUID,
+    author_update: AuthorCreate,
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user)
+):
+    """
+    Atualiza parcialmente os dados de um autor.
+    """
+    logger.info(f"Solicitada atualização parcial do autor ID: {author_id}")
+    return patch_author_service(db, str(author_id), author_update)
+
+
+@router.delete("/{author_id}", status_code=status.HTTP_204_NO_CONTENT, tags=["Autores"])
+@limiter.limit("20/minute")
+def delete_author(
+    request: Request,
+    author_id: UUID,
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user)
+):
+    """
+    Remove um autor do sistema pelo seu ID.
+    """
+    logger.info(f"Solicitada exclusão do autor ID: {author_id}")
+    delete_author_service(db, str(author_id))
+    return None
+

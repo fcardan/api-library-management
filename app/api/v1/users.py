@@ -5,8 +5,10 @@ Inclui operações de criação, listagem, detalhamento, atualização e remoç�
 de usuários do sistema com autenticação e validações apropriadas.
 """
 
-from fastapi import APIRouter, Depends, status, HTTPException
+from fastapi import APIRouter, Depends, status, HTTPException, Request
 from sqlalchemy.orm import Session
+from slowapi import Limiter
+from slowapi.util import get_remote_address
 from typing import List
 
 from app.db.session import get_db
@@ -24,9 +26,14 @@ from app.core.logging import logger
 
 router = APIRouter()
 
+# Limite de requisições por minuto por IP
+limiter = Limiter(key_func=get_remote_address)  # por IP
+
 
 @router.post("/", response_model=UserOut, status_code=status.HTTP_201_CREATED, tags=["Usuários"])
-def create_user(user_in: UserCreate, db: Session = Depends(get_db)):
+@limiter.limit("20/minute")
+def create_user(
+    request: Request, user_in: UserCreate, db: Session = Depends(get_db)):
     """
     Cria um novo usuário no sistema, caso o e-mail ainda não esteja em uso.
     """
@@ -35,7 +42,9 @@ def create_user(user_in: UserCreate, db: Session = Depends(get_db)):
 
 
 @router.get("/", response_model=List[UserOut], tags=["Usuários"])
+@limiter.limit("50/minute")
 def list_users(
+    request: Request,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
@@ -48,7 +57,9 @@ def list_users(
 
 
 @router.get("/{user_id}", response_model=UserOut, tags=["Usuários"])
+@limiter.limit("50/minute")
 def get_user(
+    request: Request,
     user_id: str,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
@@ -62,7 +73,9 @@ def get_user(
 
 
 @router.get("/{user_id}/loans", response_model=UserOut, tags=["Usuários"])
+@limiter.limit("50/minute")
 def get_loans(
+    request: Request,
     user_id: str,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
@@ -92,7 +105,9 @@ def get_loans(
 
 
 @router.put("/{user_id}", response_model=UserOut, tags=["Usuários"])
+@limiter.limit("20/minute")
 def update_user(
+    request: Request,
     user_id: str,
     user_update: UserUpdate,
     db: Session = Depends(get_db),
@@ -106,7 +121,9 @@ def update_user(
 
 
 @router.patch("/{user_id}", response_model=UserOut, tags=["Usuários"])
+@limiter.limit("20/minute")
 def patch_user(
+    request: Request,
     user_id: str,
     user_update: UserUpdate,
     db: Session = Depends(get_db),
@@ -120,7 +137,9 @@ def patch_user(
 
 
 @router.delete("/{user_id}", status_code=status.HTTP_204_NO_CONTENT, tags=["Usuários"])
+@limiter.limit("20/minute")
 def delete_user(
+    request: Request,
     user_id: str,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)

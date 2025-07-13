@@ -22,11 +22,13 @@ from app.services.book_service import (
 )
 
 router = APIRouter()
-limiter = Limiter(key_func=get_remote_address)
+
+# Limite de requisições por minuto por IP
+limiter = Limiter(key_func=get_remote_address)  # por IP
 
 
 @router.post("/", response_model=BookOut, status_code=status.HTTP_201_CREATED)
-@limiter.limit("5/minute")
+@limiter.limit("20/minute")
 def create_book(
     request: Request,
     book: BookCreate,
@@ -48,7 +50,7 @@ def create_book(
 
 
 @router.get("/", response_model=List[BookOut])
-@limiter.limit("10/minute")
+@limiter.limit("50/minute")
 def list_books(
     request: Request,
     skip: int = 0,
@@ -70,11 +72,62 @@ def list_books(
         raise HTTPException(status_code=500, detail="Erro ao recuperar livros")
 
 
+@router.get("/available", response_model=List[BookOut], tags=["Livros"])
+@limiter.limit("50/minute")
+def list_books_by_availability(
+    request: Request,
+    status: bool = Query(..., description="True para disponíveis, False para indisponíveis"),
+    skip: int = Query(0, ge=0, description="Número de itens a pular"),
+    limit: int = Query(10, ge=1, le=100, description="Número máximo de itens por página"),
+    order_by: Optional[str] = Query(
+        "title",
+        description="Campo de ordenação: 'title', 'published_date', 'total_copies'. Use prefixo '-' para ordem decrescente (ex: '-title')."
+    ),
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user)
+):
+    """
+    Lista livros disponíveis ou indisponíveis conforme o parâmetro,
+    com paginação e ordenação.
+    """
+    logger.info(
+        f"Listando livros com disponibilidade={status}, skip={skip}, "
+        f"limit={limit}, order_by={order_by}"
+    )
+    try:
+        return list_books_by_availability_service(
+            db=db,
+            status=status,
+            skip=skip,
+            limit=limit,
+            order_by=order_by
+        )
+    except Exception as e:
+        logger.error(f"Erro ao listar livros por disponibilidade: {e}")
+        raise HTTPException(status_code=500, detail="Erro ao recuperar livros")
 
+
+@router.get("/{book_id}", response_model=BookOut)
+@limiter.limit("50/minute")
+def get_book(
+    request: Request,
+    book_id: str,
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user)
+):
+    """
+    Busca os detalhes de um livro pelo seu ID.
+    """
+    logger.debug(f"Buscando livro por ID: {book_id}")
+    try:
+        return get_book_service(db, book_id)
+    except HTTPException as e:
+        logger.warning(f"Erro ao buscar livro: {e.detail}")
+        raise
 
 
 @router.patch("/{book_id}", response_model=BookOut)
-@limiter.limit("5/minute")
+@limiter.limit("20/minute")
 def patch_book(
     request: Request,
     book_id: str,
@@ -97,7 +150,7 @@ def patch_book(
 
 
 @router.put("/{book_id}", response_model=BookOut)
-@limiter.limit("5/minute")
+@limiter.limit("20/minute")
 def put_book(
     request: Request,
     book_id: str,
@@ -120,7 +173,7 @@ def put_book(
 
 
 @router.delete("/{book_id}", status_code=status.HTTP_204_NO_CONTENT)
-@limiter.limit("5/minute")
+@limiter.limit("20/minute")
 def delete_book(
     request: Request,
     book_id: str,
@@ -139,39 +192,3 @@ def delete_book(
     except Exception as e:
         logger.error(f"Erro inesperado ao excluir livro {book_id}: {str(e)}")
         raise HTTPException(status_code=500, detail="Erro ao excluir livro")
-
-
-@router.get("/available", response_model=List[BookOut], tags=["Livros"])
-def list_books_by_availability(
-    request: Request,
-    status: bool = Query(..., description="True para disponíveis, False para indisponíveis"),
-    db: Session = Depends(get_db),
-    current_user=Depends(get_current_user)
-):
-    """
-    Lista livros disponíveis ou indisponíveis conforme o parâmetro.
-    """
-    logger.info(f"Listando livros com disponibilidade = {status}")
-    try:
-        return list_books_by_availability_service(db, status)
-    except Exception as e:
-        logger.error(f"Erro ao listar livros por disponibilidade: {str(e)}")
-        raise HTTPException(status_code=500, detail="Erro ao recuperar livros")
-
-
-@router.get("/{book_id}", response_model=BookOut)
-def get_book(
-    request: Request,
-    book_id: str,
-    db: Session = Depends(get_db),
-    current_user=Depends(get_current_user)
-):
-    """
-    Busca os detalhes de um livro pelo seu ID.
-    """
-    logger.debug(f"Buscando livro por ID: {book_id}")
-    try:
-        return get_book_service(db, book_id)
-    except HTTPException as e:
-        logger.warning(f"Erro ao buscar livro: {e.detail}")
-        raise

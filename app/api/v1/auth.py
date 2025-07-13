@@ -21,7 +21,7 @@ limiter = Limiter(key_func=get_remote_address)
 
 
 @router.post("/token", summary="Autenticação do usuário (Login)")
-@limiter.limit("5/minute")
+@limiter.limit("7/minute")
 def login_for_access_token(
     request: Request,
     form_data: OAuth2PasswordRequestForm = Depends(),
