@@ -70,6 +70,7 @@ library-management/
 │   │   │   └── books.py
 │   │   │   └── loans.py
 │   │   │   └── router.py
+│   │   │   └── reports.py
 │   │   │   └── users.py
 │   ├── core/
 │   │   ├── .env
@@ -96,6 +97,7 @@ library-management/
 │   │   ├── author_service.py
 │   │   ├── book_service.py
 │   │   └── loan_service.py
+│   │   └── report_service.py
 │   │   ├── user_service.py
 │   ├── utils/
 │   │   └── export.py
@@ -108,6 +110,7 @@ library-management/
 └── README.md
 └── README-ptbr.md
 └── LICENSE.md
+└── Insomnia_library-api.yaml
 ~~~
 
 ---
