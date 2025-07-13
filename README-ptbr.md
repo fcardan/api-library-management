@@ -47,7 +47,8 @@ api-library-management é uma API RESTful em Python criada para gerenciar as ope
 | ORM                | SQLAlchemy                     |
 | Banco de Dados     | MySQL                          |
 | Documentação API   | FastAPI OpenAPI / Swagger UI   |
-| Testes             | Pytest                         |
+| Rating Limiting    | SlowAPI                        |
+| Export PDF         | FPDF                           |
 | Logging            | structlog                      |
 
 ---
@@ -139,7 +140,7 @@ Acesse o Swagger UI em `http://localhost:8000/docs`
 
 ---
 
-## Endpoints da API (INSOMNIA)
+## Endpoints da API
 
 #### Autenticação
 - **Login**: `🟢 POST /auth/token`  
@@ -182,6 +183,26 @@ Acesse o Swagger UI em `http://localhost:8000/docs`
 - **Atualização Completa do Empréstimo**: `🟠 PUT /loans/{loan_id}`  
 - **Atualização Parcial do Empréstimo**: `🟡 PATCH /loans/{loan_id}`  
 - **Remover Empréstimo**: `🔴 DELETE /loans/{loan_id}`  
+
+#### Relatórios
+- **Exportar CSV - Livros**: `🟣 GET /reports/books/csv`  
+- **Exportar PDF - Completo**: `🟣 GET /reports/full/pdf`  
+
+### OBSERVAÇÕES:
+
+- **Autenticação**: Todos os endpoints (exceto POST /auth/token) exigem um token Bearer JWT válido no cabeçalho Authorization.
+
+- **Segurança no Login**: O endpoint POST /auth/token é limitado a 10 requisições por minuto por IP para proteger contra ataques de força‑bruta e credential stuffing.
+
+#### Limites de Taxa
+
+- Endpoints GET (listagens) → 50 requisições/minuto por cliente
+
+- POST, PUT, PATCH, DELETE → 20 requisições/minuto por cliente
+
+- **Paginação**: Suportada em GET /books e GET /books/available pelos parâmetros de consulta skip e limit.
+
+- **Ordenação**: Disponível nesses endpoints de listagem via parâmetro order_by (por exemplo, order_by=title, order_by=published_date, order_by=total_copies).
 
 ---
 

@@ -48,7 +48,9 @@ api-library-management is a Python RESTful API built to manage a library system�
 | ORM              | SQLAlchemy                   |
 | Database         | MySQL                        |
 | API Docs         | FastAPI OpenAPI / Swagger UI |
+| Rating Limiting  | SlowAPI                      |
 | Testing          | Pytest                       |
+| Export PDF       | FPDF                         |
 | Logging          | structlog                    |
 
 ---
@@ -140,7 +142,7 @@ Access Swagger UI at `http://localhost:8000/docs`
 
 ---
 
-## API Endpoints (INSOMNIA)
+## API Endpoints
 
 #### Authentication
 - **Login**: `🟢 POST /auth/token`  
@@ -185,6 +187,26 @@ Access Swagger UI at `http://localhost:8000/docs`
 - **Partial Update Loan**: `🟡 PATCH /loans/{loan_id}`  
 - **Delete Loan**: `🔴 DELETE /loans/{loan_id}`  
 
+#### Reports
+- **Export CSV - Books**: `🟣 GET /reports/books/csv`  
+- **Export PDF - Full**: `🟣 GET /reports/full/pdf`  
+
+
+### NOTE:
+
+- **Authentication**: All endpoints (except POST /auth/token) require a valid JWT Bearer token in the Authorization header.
+
+- **Login Security**: The POST /auth/token endpoint is rate‑limited to 10 requests per minute per IP to protect against brute‑force and credential‑stuffing attacks.
+
+#### Rate Limits:
+
+- GET endpoints (listings) → 50 requests/minute per client
+
+- POST, PUT, PATCH, DELETE → 20 requests/minute per client
+
+- **Pagination**: Supported on GET /books and GET /books/available via skip and limit query parameters.
+
+- **Sorting**: Available on those listing endpoints via order_by (e.g. order_by=title, order_by=published_date, order_by=total_copies).
 ---
 
 ### Request Examples

@@ -4,7 +4,9 @@ sqlalchemy
 pymysql
 python-dotenv
 pydantic
+slowapi
 python-jose
 bcrypt==4.0.1
 passlib[bcrypt]
 colorama
+fpdf
