@@ -1,0 +1,999 @@
+type: collection.insomnia.rest/5.0
+name: Library Management API
+meta:
+  id: wrk_f4d4e1f06c6045559c70cc2e2d4981ca
+  created: 1752091126557
+  modified: 1752091126557
+  description: ""
+collection:
+  - name: API Routes
+    meta:
+      id: fld_6f3f4596cc7d439db6c3ee3d624b97cb
+      created: 1752091126563
+      modified: 1752091126563
+      sortKey: -1752091126563
+      description: ""
+    children:
+      - name: v1
+        meta:
+          id: fld_ec26341d3fe04488ae8631e1916c68f3
+          created: 1752158129109
+          modified: 1752158133821
+          sortKey: -1752091126684
+          description: ""
+        children:
+          - name: Books
+            meta:
+              id: fld_9afb18b3fb0b42a38cad58b1946baa29
+              created: 1752158162393
+              modified: 1752249382707
+              sortKey: -1752158246834
+              description: ""
+            children:
+              - url: "{{ base_url }}/books"
+                name: Create Book
+                meta:
+                  id: req_37a4e9dc0e8944b7bc48c9d120b6d67f
+                  created: 0
+                  modified: 1752261083783
+                  isPrivate: false
+                  description: ""
+                  sortKey: -1752158263321
+                method: POST
+                body:
+                  mimeType: application/json
+                  text: >-
+                    {
+                    	"title": "btg",
+                    	"author_id": "003055e6-372f-475d-a6ce-46e7d0def925",   			          	"published_date": "1949-06-08", 
+                    	"total_copies": 2,
+                    	"available_copies": 2
+                    }
+                headers:
+                  - name: Content-Type
+                    value: application/json
+                    id: pair_ca1a129db1b743e9918763517377c155
+                authentication:
+                  type: bearer
+                  token: "{{token}}"
+                settings:
+                  renderRequestBody: true
+                  encodeUrl: true
+                  followRedirects: global
+                  cookies:
+                    send: true
+                    store: true
+                  rebuildPath: true
+              - url: "{{ base_url }}/books/{{book_id}}"
+                name: Get Book by ID
+                meta:
+                  id: req_49ab3b17e982409c876330d76285480a
+                  created: 0
+                  modified: 1752339777045
+                  isPrivate: false
+                  description: ""
+                  sortKey: -1752158263271
+                method: GET
+                body:
+                  mimeType: application/json
+                  text: ""
+                headers:
+                  - name: Content-Type
+                    value: application/json
+                    id: pair_36b08eec02d647a9a3558dfb3a206ea9
+                authentication:
+                  type: bearer
+                  token: "{{token}}"
+                settings:
+                  renderRequestBody: true
+                  encodeUrl: true
+                  followRedirects: global
+                  cookies:
+                    send: true
+                    store: true
+                  rebuildPath: true
+              - url: "{{ base_url }}/books"
+                name: List Books
+                meta:
+                  id: req_e61008562f6b49ec96af4f8396dfe27d
+                  created: 0
+                  modified: 1752339764122
+                  isPrivate: false
+                  description: ""
+                  sortKey: -1752158263221
+                method: GET
+                body:
+                  mimeType: application/json
+                  text: ""
+                headers:
+                  - name: Content-Type
+                    value: application/json
+                    id: pair_c8a91eb293604cf3ae38ac090c49bc30
+                authentication:
+                  type: bearer
+                  token: "{{token}}"
+                settings:
+                  renderRequestBody: true
+                  encodeUrl: true
+                  followRedirects: global
+                  cookies:
+                    send: true
+                    store: true
+                  rebuildPath: true
+              - url: "{{base_url}}/books/{{book_id}}"
+                name: Parcial Update Book
+                meta:
+                  id: req_d957da7384b64b6191165e1c4fca227f
+                  created: 1752247401180
+                  modified: 1752280792622
+                  isPrivate: false
+                  description: ""
+                  sortKey: -1752158263171
+                method: PATCH
+                body:
+                  mimeType: application/json
+                  text: |-
+                    	{
+                    		"title": "Livro BTG",
+                    		"author_id": "59f3b68a-6f19-45c2-b73a-8151c4ea40de",		
+                    		"total_copies": 7,		
+                    		"available_copies": 7
+                    	}
+                headers:
+                  - name: Content-Type
+                    value: application/json
+                  - name: User-Agent
+                    value: insomnia/11.2.0
+                authentication:
+                  type: bearer
+                  token: "{{token}}"
+                settings:
+                  renderRequestBody: true
+                  encodeUrl: true
+                  followRedirects: global
+                  cookies:
+                    send: true
+                    store: true
+                  rebuildPath: true
+              - url: "{{base_url}}/books/{{book_id}}"
+                name: Update Book
+                meta:
+                  id: req_a2a5fdd07cbc4b2b91d525693e0d37f4
+                  created: 1752247427470
+                  modified: 1752281480780
+                  isPrivate: false
+                  description: ""
+                  sortKey: -1752158263121
+                method: PUT
+                body:
+                  mimeType: application/json
+                  text: |-
+                    {
+                    		"title": "BTG TESTEDELETE",
+                    		"author_id": "59f3b68a-6f19-45c2-b73a-8151c4ea40de",
+                    		"published_date": "2025-06-08",
+                    		"total_copies": 13,
+                    		"id": "489ffaff-17e7-4120-aaf2-12020e557070",
+                    		"available_copies": 13
+                    	}
+                headers:
+                  - name: Content-Type
+                    value: application/json
+                  - name: User-Agent
+                    value: insomnia/11.2.0
+                authentication:
+                  type: bearer
+                  token: "{{token}}"
+                settings:
+                  renderRequestBody: true
+                  encodeUrl: true
+                  followRedirects: global
+                  cookies:
+                    send: true
+                    store: true
+                  rebuildPath: true
+              - url: "{{base_url}}/books/{{book_id}}"
+                name: Delete Book
+                meta:
+                  id: req_c4e6501c557e410d939687ba4761a405
+                  created: 1752249425904
+                  modified: 1752281647293
+                  isPrivate: false
+                  description: ""
+                  sortKey: -1752158263021
+                method: DELETE
+                body:
+                  mimeType: application/json
+                  text: ""
+                headers:
+                  - name: Content-Type
+                    value: application/json
+                  - name: User-Agent
+                    value: insomnia/11.2.0
+                authentication:
+                  type: bearer
+                  token: "{{token}}"
+                settings:
+                  renderRequestBody: true
+                  encodeUrl: true
+                  followRedirects: global
+                  cookies:
+                    send: true
+                    store: true
+                  rebuildPath: true
+              - url: "{{ base_url }}/authors/{{author_id}}/books"
+                name: List Books by Author
+                meta:
+                  id: req_dd91d514194b48598f5f97d85c0c0c6b
+                  created: 1752249464069
+                  modified: 1752280322888
+                  isPrivate: false
+                  description: ""
+                  sortKey: -1752158263196
+                method: GET
+                body:
+                  mimeType: application/json
+                  text: ""
+                headers:
+                  - name: Content-Type
+                    value: application/json
+                    id: pair_b3f873ff094944a8b3d810dae5cda93f
+                authentication:
+                  type: bearer
+                  token: "{{token}}"
+                settings:
+                  renderRequestBody: true
+                  encodeUrl: true
+                  followRedirects: global
+                  cookies:
+                    send: true
+                    store: true
+                  rebuildPath: true
+              - url: "{{base_url}}/books/available"
+                name: List Books by Status
+                meta:
+                  id: req_b9d9aa1ad32047c6a2a84969c309c6d2
+                  created: 1752288073849
+                  modified: 1752296972136
+                  isPrivate: false
+                  description: ""
+                  sortKey: -1752158263183.5
+                method: GET
+                parameters:
+                  - id: pair_a4967c7f0fc844428dbb4ad88283e193
+                    name: status
+                    value: "true"
+                    description: ""
+                    disabled: false
+                headers:
+                  - name: User-Agent
+                    value: insomnia/11.2.0
+                authentication:
+                  type: bearer
+                  token: "{{token}}"
+                settings:
+                  renderRequestBody: true
+                  encodeUrl: true
+                  followRedirects: global
+                  cookies:
+                    send: true
+                    store: true
+                  rebuildPath: true
+          - name: Auth
+            meta:
+              id: fld_d6c78c9661c147f99df87e241e1f4e1a
+              created: 1752158229491
+              modified: 1752280350628
+              sortKey: -1752158246984
+              description: ""
+            children:
+              - url: "{{ base_url }}/auth/token"
+                name: Login
+                meta:
+                  id: req_a5f034079e7d486690e7a8ed012b4c1a
+                  created: 0
+                  modified: 1752200276549
+                  isPrivate: false
+                  description: ""
+                  sortKey: -1752197976255
+                method: POST
+                body:
+                  mimeType: application/x-www-form-urlencoded
+                  params:
+                    - id: pair_b191a0e1f1994e9d941ad1916f7ddc82
+                      name: username
+                      value: fecardan@gmail.com
+                      description: ""
+                      disabled: false
+                    - id: pair_b4daf252ea2e49e1aca6ca1c968a9f34
+                      name: password
+                      value: senhasegura123
+                      description: ""
+                      disabled: false
+                headers:
+                  - name: Content-Type
+                    value: application/x-www-form-urlencoded
+                settings:
+                  renderRequestBody: true
+                  encodeUrl: true
+                  followRedirects: global
+                  cookies:
+                    send: true
+                    store: true
+                  rebuildPath: true
+          - name: Loans
+            meta:
+              id: fld_0758bd0e132a436baf9dcbcffcd03f57
+              created: 1752158233198
+              modified: 1752249391624
+              sortKey: -1752158246809
+              description: ""
+            children:
+              - url: "{{ base_url }}/loans"
+                name: List Loans
+                meta:
+                  id: req_e8b7612394544589b4601902074f8284
+                  created: 0
+                  modified: 1752339019691
+                  isPrivate: false
+                  description: ""
+                  sortKey: -1752296632550
+                method: GET
+                body:
+                  mimeType: application/json
+                  text: ""
+                headers:
+                  - name: Content-Type
+                    value: application/json
+                    id: pair_6c2f3e431010439d8f92ccce8eb44f67
+                authentication:
+                  type: bearer
+                  token: "{{token}}"
+                settings:
+                  renderRequestBody: true
+                  encodeUrl: true
+                  followRedirects: global
+                  cookies:
+                    send: true
+                    store: true
+                  rebuildPath: true
+              - url: "{{ base_url }}/loans/"
+                name: Create Loan
+                meta:
+                  id: req_ed26de9efcee47c8a71e6c826a4d284b
+                  created: 0
+                  modified: 1752340374095
+                  isPrivate: false
+                  description: ""
+                  sortKey: -1752296669813
+                method: POST
+                body:
+                  mimeType: application/json
+                  text: |-
+                    {
+                    	"user_id": "040446ef-7338-4351-955b-c94406332c9b", 
+                    	"book_id": "322b0e8b-cb0e-460d-bb5e-0987a3ba6eb3", 
+                    	"loan_date": "2025-06-10"
+                    }
+                headers:
+                  - name: Content-Type
+                    value: application/json
+                    id: pair_cfc23dccc0e8442b843db9a783c8fbe8
+                authentication:
+                  type: bearer
+                  token: "{{token}}"
+                settings:
+                  renderRequestBody: true
+                  encodeUrl: true
+                  followRedirects: global
+                  cookies:
+                    send: true
+                    store: true
+                  rebuildPath: true
+              - url: "{{base_url}}/loans/active/{{user_id}}"
+                name: List Loans Active
+                meta:
+                  id: req_80e984c4c9914b70a59bd0834f0aaf48
+                  created: 1752296294918
+                  modified: 1752339042449
+                  isPrivate: false
+                  description: ""
+                  sortKey: -1752296474118
+                method: GET
+                body:
+                  mimeType: application/json
+                  text: ""
+                headers:
+                  - name: Content-Type
+                    value: application/json
+                    id: pair_d81e9ccb6bb14513b0fa268f4703057f
+                authentication:
+                  type: bearer
+                  token: "{{token}}"
+                settings:
+                  renderRequestBody: true
+                  encodeUrl: true
+                  followRedirects: global
+                  cookies:
+                    send: true
+                    store: true
+                  rebuildPath: true
+              - url: "{{base_url}}/loans/overdue/{{user_id}}"
+                name: List Loans Overdue
+                meta:
+                  id: req_2bfa659027a242cca4ea7351fc6a9838
+                  created: 1752296474093
+                  modified: 1752353226963
+                  isPrivate: false
+                  description: ""
+                  sortKey: -1752296474093
+                method: GET
+                body:
+                  mimeType: application/json
+                  text: ""
+                headers:
+                  - name: Content-Type
+                    value: application/json
+                  - name: User-Agent
+                    value: insomnia/11.2.0
+                authentication:
+                  type: bearer
+                  token: "{{token}}"
+                settings:
+                  renderRequestBody: true
+                  encodeUrl: true
+                  followRedirects: global
+                  cookies:
+                    send: true
+                    store: true
+                  rebuildPath: true
+              - url: "{{base_url}}/loans/history/{{user_id}}"
+                name: List Loans History
+                meta:
+                  id: req_19d344867ed6450d8996250de32ee410
+                  created: 1752296595386
+                  modified: 1752296792969
+                  isPrivate: false
+                  description: ""
+                  sortKey: -1752296595387
+                method: GET
+                headers:
+                  - name: User-Agent
+                    value: insomnia/11.2.0
+                authentication:
+                  type: bearer
+                  token: "{{token}}"
+                settings:
+                  renderRequestBody: true
+                  encodeUrl: true
+                  followRedirects: global
+                  cookies:
+                    send: true
+                    store: true
+                  rebuildPath: true
+              - url: "{{base_url}}/loans/{{loan_id}}"
+                name: List Loan by ID
+                meta:
+                  id: req_63f5f333e0b343c2bf0af581c845c325
+                  created: 1752296669713
+                  modified: 1752296806648
+                  isPrivate: false
+                  description: ""
+                  sortKey: -1752296669713
+                method: GET
+                headers:
+                  - name: User-Agent
+                    value: insomnia/11.2.0
+                authentication:
+                  type: bearer
+                  token: "{{token}}"
+                settings:
+                  renderRequestBody: true
+                  encodeUrl: true
+                  followRedirects: global
+                  cookies:
+                    send: true
+                    store: true
+                  rebuildPath: true
+              - url: "{{base_url}}/loans/{{loan_id}}/"
+                name: Partial Update Loan
+                meta:
+                  id: req_550a717ec19b4c02a81ecc153a901489
+                  created: 1752297011359
+                  modified: 1752353737028
+                  isPrivate: false
+                  description: ""
+                  sortKey: -1752296473993
+                method: PATCH
+                body:
+                  mimeType: application/json
+                  text: |-
+                    	{					
+                    		"return_date": "2025-07-12"
+                    	}
+                headers:
+                  - name: Content-Type
+                    value: application/json
+                  - name: User-Agent
+                    value: insomnia/11.2.0
+                authentication:
+                  type: bearer
+                  token: "{{token}}"
+                settings:
+                  renderRequestBody: true
+                  encodeUrl: true
+                  followRedirects: global
+                  cookies:
+                    send: true
+                    store: true
+                  rebuildPath: true
+              - url: "{{base_url}}/loans/{{loan_id}}"
+                name: Update Loan
+                meta:
+                  id: req_31dfa67ae51c4079aa2a53a565c19786
+                  created: 1752297024463
+                  modified: 1752353148453
+                  isPrivate: false
+                  description: ""
+                  sortKey: -1752296473893
+                method: PUT
+                body:
+                  mimeType: application/json
+                  text: |-
+                    	{
+                    		"user_id": "040446ef-7338-4351-955b-c94406332c9b",
+                    		"book_id": "322b0e8b-cb0e-460d-bb5e-0987a3ba6eb3",
+                    		"loan_date": "2025-06-24",		
+                    		"due_date": "2025-07-08",
+                    		"id": "e6cad9f4-e763-4b13-89dd-a21fccd557c7",
+                    		"return_date": "2025-07-12"		
+                    	}
+                headers:
+                  - name: Content-Type
+                    value: application/json
+                  - name: User-Agent
+                    value: insomnia/11.2.0
+                authentication:
+                  type: bearer
+                  token: "{{token}}"
+                settings:
+                  renderRequestBody: true
+                  encodeUrl: true
+                  followRedirects: global
+                  cookies:
+                    send: true
+                    store: true
+                  rebuildPath: true
+              - url: "{{base_url}}/loans/{{loan_id}}"
+                name: Delete Loan
+                meta:
+                  id: req_d5a19344677d432e8d9bfec4b2b9d622
+                  created: 1752297052510
+                  modified: 1752344259866
+                  isPrivate: false
+                  description: ""
+                  sortKey: -1752296473793
+                method: DELETE
+                headers:
+                  - name: User-Agent
+                    value: insomnia/11.2.0
+                authentication:
+                  type: bearer
+                  token: "{{token}}"
+                settings:
+                  renderRequestBody: true
+                  encodeUrl: true
+                  followRedirects: global
+                  cookies:
+                    send: true
+                    store: true
+                  rebuildPath: true
+          - name: Users
+            meta:
+              id: fld_48e3317855514315a0953fccee66de43
+              created: 1752158239416
+              modified: 1752158253799
+              sortKey: -1752158246784
+              description: ""
+            children:
+              - url: "{{ base_url }}/users"
+                name: Create User
+                meta:
+                  id: req_7b78c2729f864960a111c72147108667
+                  created: 0
+                  modified: 1752246964860
+                  isPrivate: false
+                  description: ""
+                  sortKey: -1752197906807
+                method: POST
+                body:
+                  mimeType: application/json
+                  text: |
+                    {
+                      "name": "Felipe Santander",
+                      "email": "fcardan@santander.com.br",
+                      "password": "senhateste"
+                    }
+                headers:
+                  - name: Content-Type
+                    value: application/json
+                    id: pair_6b2faeb24aef41c1b63ab9f1526f072c
+                authentication:
+                  type: bearer
+                  token: "{{token}}"
+                settings:
+                  renderRequestBody: true
+                  encodeUrl: true
+                  followRedirects: global
+                  cookies:
+                    send: true
+                    store: true
+                  rebuildPath: true
+              - url: "{{ base_url }}/users"
+                name: List Users
+                meta:
+                  id: req_bd651cc40e5848f683c464750a241905
+                  created: 0
+                  modified: 1752246967599
+                  isPrivate: false
+                  description: ""
+                  sortKey: -1752197906757
+                method: GET
+                body:
+                  mimeType: application/json
+                  text: ""
+                headers:
+                  - name: Content-Type
+                    value: application/json
+                    id: pair_a0a17751d2c84560baf5cab4cef28ef8
+                authentication:
+                  type: bearer
+                  token: "{{token}}"
+                settings:
+                  renderRequestBody: true
+                  encodeUrl: true
+                  followRedirects: global
+                  cookies:
+                    send: true
+                    store: true
+                  rebuildPath: true
+              - url: "{{ base_url }}/users/{{user_id}}"
+                name: Delete User
+                meta:
+                  id: req_681eb15584384ba287ac36a80e72ed16
+                  created: 1752197899617
+                  modified: 1752246371344
+                  isPrivate: false
+                  description: ""
+                  sortKey: -1752197906207
+                method: DELETE
+                headers:
+                  - name: User-Agent
+                    value: insomnia/11.2.0
+                authentication:
+                  type: bearer
+                  token: "{{token}}"
+                settings:
+                  renderRequestBody: true
+                  encodeUrl: true
+                  followRedirects: global
+                  cookies:
+                    send: true
+                    store: true
+                  rebuildPath: true
+              - url: "{{ base_url }}/users/{{ _.user_id }}"
+                name: Update User
+                meta:
+                  id: req_6cc0ca6a9943413f823ca7323222afab
+                  created: 1752198238023
+                  modified: 1752200197218
+                  isPrivate: false
+                  description: ""
+                  sortKey: -1752197906507
+                method: PUT
+                body:
+                  mimeType: application/json
+                  text: |
+                    {
+                      "name": "Felipe Cardan",
+                    	"email": "fecardan@gmail.com"
+                    }
+                headers:
+                  - name: Content-Type
+                    value: application/json
+                  - name: User-Agent
+                    value: insomnia/11.2.0
+                authentication:
+                  type: bearer
+                  token: "{{token}}"
+                settings:
+                  renderRequestBody: true
+                  encodeUrl: true
+                  followRedirects: global
+                  cookies:
+                    send: true
+                    store: true
+                  rebuildPath: true
+              - url: "{{ base_url }}/users/{{ _.user_id }}"
+                name: Parcial Update User
+                meta:
+                  id: req_49e90b1bb69c428687c1070a6224bb17
+                  created: 1752198260278
+                  modified: 1752200428083
+                  isPrivate: false
+                  description: ""
+                  sortKey: -1752197906607
+                method: PATCH
+                body:
+                  mimeType: application/json
+                  text: |
+                    {
+                      "name": "Felipe Cardan dos Santos"  
+                    }
+                headers:
+                  - name: Content-Type
+                    value: application/json
+                    id: pair_a94a9ed9029f4856a8a7460eaad6958b
+                authentication:
+                  type: bearer
+                  token: "{{token}}"
+                settings:
+                  renderRequestBody: true
+                  encodeUrl: true
+                  followRedirects: global
+                  cookies:
+                    send: true
+                    store: true
+                  rebuildPath: true
+              - url: "{{base_url}}/users/{{user_id}}"
+                name: Get User by ID
+                meta:
+                  id: req_954a5f6ec3e542678b933a3be3657fad
+                  created: 1752246634666
+                  modified: 1752283078782
+                  isPrivate: false
+                  description: ""
+                  sortKey: -1752197906782
+                method: GET
+                headers:
+                  - name: User-Agent
+                    value: insomnia/11.2.0
+                authentication:
+                  type: bearer
+                  token: "{{token}}"
+                settings:
+                  renderRequestBody: true
+                  encodeUrl: true
+                  followRedirects: global
+                  cookies:
+                    send: true
+                    store: true
+                  rebuildPath: true
+              - url: "{{base_url}}/users/{{user_id}}/loans"
+                name: List Loans by ID
+                meta:
+                  id: req_669bd15f6e7346629286b8e9002c3ef4
+                  created: 1752282807811
+                  modified: 1752283110324
+                  isPrivate: false
+                  description: ""
+                  sortKey: -1752197906682
+                method: GET
+                headers:
+                  - name: User-Agent
+                    value: insomnia/11.2.0
+                authentication:
+                  type: bearer
+                  token: "{{token}}"
+                settings:
+                  renderRequestBody: true
+                  encodeUrl: true
+                  followRedirects: global
+                  cookies:
+                    send: true
+                    store: true
+                  rebuildPath: true
+          - name: Authors
+            meta:
+              id: fld_24db41eb7649480d8f4f3b97f349dec6
+              created: 1752197993840
+              modified: 1752197996712
+              sortKey: -1752158246884
+              description: ""
+            children:
+              - url: "{{base_url}}/authors"
+                name: List Authors
+                meta:
+                  id: req_f82efc8ad3c2419290282ca91f1b9873
+                  created: 1752246499010
+                  modified: 1752250320844
+                  isPrivate: false
+                  description: ""
+                  sortKey: -1752246503362
+                method: GET
+                headers:
+                  - name: User-Agent
+                    value: insomnia/11.2.0
+                authentication:
+                  type: bearer
+                  token: "{{token}}"
+                settings:
+                  renderRequestBody: true
+                  encodeUrl: true
+                  followRedirects: global
+                  cookies:
+                    send: true
+                    store: true
+                  rebuildPath: true
+              - url: "{{base_url}}/authors"
+                name: Create Author
+                meta:
+                  id: req_523ccade95994e4aa2bcdc36e1186933
+                  created: 1752246564783
+                  modified: 1752249840740
+                  isPrivate: false
+                  description: ""
+                  sortKey: -1752246503462
+                method: POST
+                body:
+                  mimeType: application/json
+                  text: |-
+                    {
+                    	"name": "felipe bio",
+                    	"bio": "descrição teste"
+                    }
+                headers:
+                  - name: Content-Type
+                    value: application/json
+                  - name: User-Agent
+                    value: insomnia/11.2.0
+                authentication:
+                  type: bearer
+                  token: "{{token}}"
+                settings:
+                  renderRequestBody: true
+                  encodeUrl: true
+                  followRedirects: global
+                  cookies:
+                    send: true
+                    store: true
+                  rebuildPath: true
+              - url: "{{base_url}}/authors/{{author_id}}"
+                name: Delete Author
+                meta:
+                  id: req_40f465afab6944eb8c1e220b57ed2dcd
+                  created: 1752246580198
+                  modified: 1752251726695
+                  isPrivate: false
+                  description: ""
+                  sortKey: -1752246502962
+                method: DELETE
+                body:
+                  mimeType: application/json
+                  text: ""
+                headers:
+                  - name: Content-Type
+                    value: application/json
+                  - name: User-Agent
+                    value: insomnia/11.2.0
+                authentication:
+                  type: bearer
+                  token: "{{token}}"
+                settings:
+                  renderRequestBody: true
+                  encodeUrl: true
+                  followRedirects: global
+                  cookies:
+                    send: true
+                    store: true
+                  rebuildPath: true
+              - url: "{{base_url}}/authors/{{author_id}}"
+                name: Get Author by ID
+                meta:
+                  id: req_55d36982701249a3b998939d1230d9d6
+                  created: 1752246767225
+                  modified: 1752250215068
+                  isPrivate: false
+                  description: ""
+                  sortKey: -1752246503412
+                method: GET
+                headers:
+                  - name: User-Agent
+                    value: insomnia/11.2.0
+                authentication:
+                  type: bearer
+                  token: "{{token}}"
+                settings:
+                  renderRequestBody: true
+                  encodeUrl: true
+                  followRedirects: global
+                  cookies:
+                    send: true
+                    store: true
+                  rebuildPath: true
+              - url: "{{base_url}}/authors/{{author_id}}"
+                name: Update Author
+                meta:
+                  id: req_312ca1b80c834295a69ce33894f811cb
+                  created: 1752246876761
+                  modified: 1752251428300
+                  isPrivate: false
+                  description: ""
+                  sortKey: -1752246503162
+                method: PUT
+                body:
+                  mimeType: application/json
+                  text: |-
+                    {
+                    		"name": "Felipe Cardan dos Santos",
+                    		"bio": "Biografia Python Developer - BTG"		
+                    	}
+                headers:
+                  - name: Content-Type
+                    value: application/json
+                  - name: User-Agent
+                    value: insomnia/11.2.0
+                authentication:
+                  type: bearer
+                  token: "{{token}}"
+                settings:
+                  renderRequestBody: true
+                  encodeUrl: true
+                  followRedirects: global
+                  cookies:
+                    send: true
+                    store: true
+                  rebuildPath: true
+              - url: "{{base_url}}/authors/{{author_id}}"
+                name: Parcial Update Author
+                meta:
+                  id: req_60a228be5b084046b38af2d048982c1e
+                  created: 1752246887225
+                  modified: 1752251370063
+                  isPrivate: false
+                  description: ""
+                  sortKey: -1752246503262
+                method: PATCH
+                body:
+                  mimeType: application/json
+                  text: |-
+                    {
+                    		"name": "felipe btg",
+                    		"bio": "biografia btg"		
+                    	}
+                headers:
+                  - name: Content-Type
+                    value: application/json
+                  - name: User-Agent
+                    value: insomnia/11.2.0
+                authentication:
+                  type: bearer
+                  token: "{{token}}"
+                settings:
+                  renderRequestBody: true
+                  encodeUrl: true
+                  followRedirects: global
+                  cookies:
+                    send: true
+                    store: true
+                  rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_a0a825aa6ff88db51040f8e1046a50cb69337b59
+    created: 1752091131810
+    modified: 1752091131810
+environments:
+  name: Base Environment
+  meta:
+    id: env_8ea902c71e2e46a0af9c1ab917305b7d
+    created: 1752091126561
+    modified: 1752353535318
+    isPrivate: false
+  data:
+    base_url: http://127.0.0.1:8000/api/v1
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmZWNhcmRhbkBnbWFpbC5jb20iLCJleHAiOjE3NTIzNzQ2Nzd9.-boDOY4gkfZSZanJuY82M0ZiCL8Mb5-EeTvKyM3fNqc
+    user_id: 040446ef-7338-4351-955b-c94406332c9b
+    book_id: 71c10dad-9ea7-45a1-92a9-1dffeeb9e614
+    author_id: 003055e6-372f-475d-a6ce-46e7d0def925
+    loan_id: 841b0c6f-2e6e-4ce3-97a9-336402f2d6c4
