@@ -2,7 +2,7 @@
 
 [![🔥 Siga meu GitHub](https://img.shields.io/badge/👉🏼-GitHub-white)](https://www.github.com/fcardan)  
 [![🔥 Siga meu Linkedin](https://img.shields.io/badge/👉🏼-Linkedin-blue)](https://www.linkedin.com/in/fcardan)  
-[![⭐ pt-br](https://img.shields.io/badge/👉🏼-PtBr-green)](https://github.com/fcardan/api-library-management/blob/main/README-ptbr.md)  
+[![⭐ en-us](https://img.shields.io/badge/👉🏼-EnUS-red)](https://github.com/fcardan/api-library-management)
 [![⭐ Star](https://img.shields.io/github/stars/fcardan/api-library-management)](https://github.com/fcardan/api-library-management)
 
 ## 🔹 Sumário
