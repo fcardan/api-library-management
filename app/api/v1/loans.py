@@ -5,11 +5,13 @@ Permite criar, listar, atualizar, editar parcialmente e remover registros de emp
 incluindo regras de negócio como limite de empréstimos por usuário, cálculo de multas etc.
 """
 
-from fastapi import APIRouter, Depends, status, HTTPException, Request
+from fastapi import APIRouter, Depends, status, Request
 from sqlalchemy.orm import Session
 from slowapi import Limiter
 from slowapi.util import get_remote_address
+
 from typing import List
+
 from app.db.session import get_db
 from app.models.user_model import User
 from app.schemas.loan_schema import LoanCreate, LoanOut, LoanUpdate, LoanPut
@@ -30,7 +32,7 @@ from app.services.loan_service import (
 router = APIRouter()
 
 # Limite de requisições por minuto por IP
-limiter = Limiter(key_func=get_remote_address)  # por IP
+limiter = Limiter(key_func=get_remote_address)
 
 @router.post("/", response_model=LoanOut, status_code=status.HTTP_201_CREATED, tags=["Empréstimos"])
 @limiter.limit("20/minute")

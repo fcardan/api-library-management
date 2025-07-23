@@ -1,6 +1,7 @@
 # app/core/settings.py
 
-from pydantic import BaseSettings, Field, AnyHttpUrl
+from pydantic import BaseSettings, Field
+
 from typing import Optional
 
 

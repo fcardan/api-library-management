@@ -11,10 +11,12 @@ Inclui regras de negócio para:
 """
 
 from sqlalchemy.orm import Session
+from fastapi import HTTPException, status
+
 from uuid import uuid4
+
 from app.models.author_model import Author
 from app.schemas.author_schema import AuthorCreate
-from fastapi import HTTPException, status
 from app.core.logging import logger
 
 

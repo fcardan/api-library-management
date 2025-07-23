@@ -2,10 +2,12 @@
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session
-from app.db.session import get_db
 from slowapi import Limiter
 from slowapi.util import get_remote_address
+
 import os
+
+from app.db.session import get_db
 from app.services.report_service import export_books_csv, export_report_pdf
 
 router = APIRouter()
@@ -14,7 +16,6 @@ router = APIRouter()
 limiter = Limiter(key_func=get_remote_address)  # por IP
 
 @router.get('/books/csv', summary='Exportar relatório de livros em CSV')
-@limiter.limit("10/minute")
 def get_books_csv(db: Session = Depends(get_db)):
     try:
         file_path = export_books_csv(db)
@@ -23,7 +24,6 @@ def get_books_csv(db: Session = Depends(get_db)):
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.get('/full/pdf', summary='Exportar relatório completo em PDF')
-@limiter.limit("10/minute")
 def get_full_pdf(db: Session = Depends(get_db)):
     try:
         file_path = export_report_pdf(db)

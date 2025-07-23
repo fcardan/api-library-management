@@ -4,11 +4,12 @@ Módulo de rotas para operações relacionadas aos autores.
 Inclui criação, listagem, busca por ID, atualização completa/parcial e exclusão.
 """
 
-from fastapi import APIRouter, Depends, Request, HTTPException, Query, status
+from fastapi import APIRouter, Depends, Request, HTTPException, status
 from sqlalchemy.orm import Session
 from slowapi import Limiter
 from slowapi.util import get_remote_address
 from uuid import UUID
+
 from app.db.session import get_db
 from app.schemas.author_schema import AuthorCreate, AuthorOut
 from app.schemas.book_schema import BookOut
@@ -28,7 +29,7 @@ from app.core.logging import logger
 router = APIRouter()
 
 # Limite de requisições por minuto por IP
-limiter = Limiter(key_func=get_remote_address)  # por IP
+limiter = Limiter(key_func=get_remote_address)
 
 
 @router.post("/", response_model=AuthorOut, status_code=status.HTTP_201_CREATED, tags=["Autores"])

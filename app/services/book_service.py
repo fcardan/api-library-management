@@ -5,9 +5,11 @@ busca, listagem, atualização (completa e parcial) e remoção de livros.
 
 from sqlalchemy.orm import Session
 from sqlalchemy import desc
-from uuid import uuid4
 from fastapi import HTTPException, status
+
+from uuid import uuid4
 from typing import Optional, List
+
 from app.models.book_model import Book
 from app.schemas.book_schema import BookCreate, BookUpdate
 from app.core.logging import logger

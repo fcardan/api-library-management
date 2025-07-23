@@ -1,12 +1,15 @@
 from sqlalchemy.orm import Session
+from fastapi import HTTPException, status
+
 from uuid import uuid4
 from typing import List
+
 from app.models.user_model import User
 from app.models.loan_model import Loan
 from app.schemas.user_schema import UserCreate, UserUpdate
 from app.core.security import get_password_hash
 from app.core.logging import logger
-from fastapi import HTTPException, status
+
 
 
 def create_user_service(db: Session, user_data: UserCreate) -> User:

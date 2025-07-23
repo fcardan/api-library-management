@@ -1,4 +1,6 @@
 from sqlalchemy.orm import Session
+from fastapi import HTTPException, status
+
 from uuid import uuid4
 from decimal import Decimal
 from typing import List
@@ -9,7 +11,7 @@ from app.models.book_model import Book
 from app.models.user_model import User
 from app.schemas.loan_schema import LoanCreate, LoanUpdate, LoanPut
 from app.core.logging import logger
-from fastapi import HTTPException, status
+
 
 
 def create_loan_service(db: Session, loan_data: LoanCreate) -> Loan:
